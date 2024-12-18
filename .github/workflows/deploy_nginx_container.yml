@@ -18,14 +18,14 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/devtoolbox
+          images: ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
@@ -33,10 +33,10 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/devtoolbox:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox:latest
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Verify Docker Image
         run: |
           echo "Docker image successfully pushed to Docker Hub!"
-          echo "Image: ${{ secrets.DOCKER_USERNAME }}/devtoolbox:latest"
+          echo "Image: ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox:latest"
