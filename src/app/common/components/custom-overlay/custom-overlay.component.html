@@ -1,0 +1,15 @@
+@if (toggleIcon) {
+  <lucide-angular
+    class="overlay-toggle"
+    [color]="isOverlayVisible() ? 'var(--color-light-blue)' : 'var(--color-grey-1)'"
+    size="30"
+    [img]="toggleIcon"
+    (click)="toggleOverlay($event)"
+  ></lucide-angular>
+
+  @if (isOverlayVisible()) {
+    <div #overlay class="overlay" @overlayAnimation>
+      <ng-content></ng-content>
+    </div>
+  }
+}

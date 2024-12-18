@@ -1,0 +1,91 @@
+<div class="menu-wrapper" [class.closed]="!isMenuVisible()" (transitionend)="onTransitionEnd()">
+  @if (isMenuVisible()) {
+    <div class="top-actions">
+      <lucide-angular
+        color="var(--color-grey-1)"
+        size="40"
+        [img]="ArrowLeft"
+        class="close-menu-button"
+        (click)="toggleMenu()"
+      ></lucide-angular>
+      <div class="install-button">
+        <lucide-angular color="var(--color-grey-1)" size="25" [img]="Download"></lucide-angular>
+        <span>Install</span>
+        <span>App</span>
+      </div>
+    </div>
+
+    <div class="main-category-buttons">
+      <div
+        class="button"
+        (click)="navigateToFeatureCategory(0)"
+        [routerLink]="routes[0].path"
+        routerLinkActive="active"
+      >
+        <lucide-angular
+          [color]="isSelected(0) ? 'var(--color-light-blue)' : 'var(--color-grey-1)'"
+          size="50"
+          [img]="FileText"
+        ></lucide-angular>
+        <span>Formatter</span>
+      </div>
+      <div
+        class="button"
+        (click)="navigateToFeatureCategory(1)"
+        [routerLink]="routes[1].path"
+        routerLinkActive="active"
+      >
+        <lucide-angular
+          [color]="isSelected(1) ? 'var(--color-light-blue)' : 'var(--color-grey-1)'"
+          size="50"
+          [img]="FlaskConical"
+        ></lucide-angular>
+        <span>Testing</span>
+      </div>
+      <div
+        class="button"
+        (click)="navigateToFeatureCategory(2)"
+        [routerLink]="routes[2].path"
+        routerLinkActive="active"
+      >
+        <lucide-angular
+          [color]="isSelected(2) ? 'var(--color-light-blue)' : 'var(--color-grey-1)'"
+          size="50"
+          [img]="Bug"
+        ></lucide-angular>
+        <span>Debugging</span>
+      </div>
+      <div
+        class="button"
+        (click)="navigateToFeatureCategory(3)"
+        [routerLink]="routes[3].path"
+        routerLinkActive="active"
+      >
+        <lucide-angular
+          [color]="isSelected(3) ? 'var(--color-light-blue)' : 'var(--color-grey-1)'"
+          size="50"
+          [img]="PanelsTopLeft"
+        ></lucide-angular>
+        <span>Frontend</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <app-custom-overlay [toggleIcon]="PaintBucket">
+        <div class="theme-switcher">
+          <span>Theme Switcher</span>
+        </div>
+        <button class="more-settings">More Settings</button>
+      </app-custom-overlay>
+      <app-custom-overlay [toggleIcon]="EllipsisVertical">
+        <span>Other content</span>
+      </app-custom-overlay>
+    </div>
+  }
+</div>
+
+@if (!isMenuVisible && !isMenuOpening) {
+  <div class="open-menu-button" (click)="toggleMenu()">
+    <lucide-angular color="var(--color-dark-blue)" size="40" [img]="ArrowRight"></lucide-angular>
+  </div>
+}

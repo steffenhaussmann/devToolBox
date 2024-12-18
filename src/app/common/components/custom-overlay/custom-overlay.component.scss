@@ -1,0 +1,22 @@
+@import '../../../../styles/colors';
+
+:host {
+  position: relative;
+
+  .overlay-toggle {
+    cursor: pointer;
+  }
+
+  .overlay {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    background-color: var(--color-light-blue);
+    box-shadow: 0 4px 8px var(--color-box-shadow);
+    border-radius: 8px 8px 8px 0;
+    padding: 16px;
+    width: 200px;
+    color: var(--color-white);
+    z-index: 1000;
+  }
+}

@@ -1,0 +1,12 @@
+# Node modules und generierte Dateien ignorieren
+node_modules/
+coverage/
+dist/
+public/
+
+# Cypress Test-Reports oder Logs
+cypress/downloads/
+lighthouse-report.html
+
+# VSCode-Konfigurationsdateien
+.vscode/
