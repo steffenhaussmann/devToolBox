@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  angular-ssr:
+    build: .
+    container_name: angular-ssr
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./dist/devtoolbox/browser:/usr/share/nginx/html
+    depends_on:
+      - angular-ssr
