@@ -9,8 +9,8 @@ RUN npm run build
 # Stage 2: Serve Angular SSR Application
 FROM node:20
 WORKDIR /app
-COPY --from=builder /app/dist/devtoolbox/browser /app/browser
-COPY --from=builder /app/dist/devtoolbox/server /app/server
+COPY --from=builder /dist/devtoolbox/browser /app/browser
+COPY --from=builder /dist/devtoolbox/server /app/server
 
 # Expose Ports
 EXPOSE 4000
