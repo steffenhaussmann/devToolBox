@@ -84,7 +84,7 @@
   }
 </div>
 
-@if (!isMenuVisible && !isMenuOpening) {
+@if (!isMenuVisible() && !isMenuOpening()) {
   <div class="open-menu-button" (click)="toggleMenu()">
     <lucide-angular color="var(--color-dark-blue)" size="40" [img]="ArrowRight"></lucide-angular>
   </div>
