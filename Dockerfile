@@ -1,19 +1,39 @@
-# Stage 1: Build Angular
-FROM node:20 AS builder
+FROM node:18 as builder
+
+# Arbeitsverzeichnis erstellen
 WORKDIR /app
+
+# Package-Dateien kopieren
 COPY package*.json ./
+
+# Abhängigkeiten installieren
 RUN npm install
-COPY . .
+
+# Projektdateien kopieren
+COPY . ./
+
+# Angular-App bauen (Produktion)
 RUN npm run build
 
-# Stage 2: Serve Angular SSR Application
-FROM node:20
+# ---
+# Production-Image
+FROM node:18 as runner
+
+# Arbeitsverzeichnis erstellen
 WORKDIR /app
-COPY --from=builder /dist/devtoolbox/browser /app/browser
-COPY --from=builder /dist/devtoolbox/server /app/server
 
-# Expose Ports
+# Benötigte Dateien aus dem Builder kopieren
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
+
+# Abhängigkeiten für den Server installieren (ohne devDependencies)
+RUN npm install --only=production
+
+# Umgebungsvariablen setzen
+ENV NODE_ENV=production
+
+# Startbefehl definieren
+CMD ["node", "dist/server/main.js"]
+
+# Exponieren des Standardports
 EXPOSE 4000
-
-# Start SSR Server
-CMD ["node", "/app/server/server.mjs"]
