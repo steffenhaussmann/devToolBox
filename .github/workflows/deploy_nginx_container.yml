@@ -1,48 +1,42 @@
-name: Build and Deploy Angular SSR with Docker
+name: Build and Push Docker Image
 
 on:
   push:
     branches:
-      - main
+      - main # Ausführen, wenn auf den main-Branch gepusht wird
+  workflow_dispatch: # Ermöglicht manuelles Starten des Workflows
 
 jobs:
-  build:
+  build-and-push:
+    name: Build and Push Docker Image to Docker Hub
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Angular SSR
-        run: npm run build:ssr
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/devtoolbox
 
       - name: Build and Push Docker Image
-        run: |
-          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox:latest .
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox:latest
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
+        uses: docker/build-push-action@v5
         with:
-          app-name: 'devtoolbox'
-          slot-name: 'Production'
-          images: '${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox:latest'
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/devtoolbox:latest
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Verify Docker Image
+        run: |
+          echo "Docker image successfully pushed to Docker Hub!"
+          echo "Image: ${{ secrets.DOCKER_USERNAME }}/devtoolbox:latest"
