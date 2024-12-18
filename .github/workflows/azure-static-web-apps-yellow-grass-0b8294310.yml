@@ -22,8 +22,10 @@ jobs:
         with:
           submodules: true
           lfs: false
+
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
+
       - name: Get Id Token
         uses: actions/github-script@v6
         id: idtoken
@@ -32,6 +34,16 @@ jobs:
             const coredemo = require('@actions/core')
             return await coredemo.getIDToken()
           result-encoding: string
+
+      - name: Rename index.csr.html to index.html
+        run: |
+          if [ -f "dist/devtoolbox/browser/index.csr.html" ]; then
+            mv dist/devtoolbox/browser/index.csr.html dist/devtoolbox/browser/index.html
+            echo "index.csr.html renamed to index.html"
+          else
+            echo "index.csr.html not found. Skipping rename step."
+          fi
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
