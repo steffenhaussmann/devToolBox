@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node dist/devtoolbox/server/main.js",
     "serve:ssr": "node dist/devtoolbox/server/main.js",
     "build": "ng build",
     "build:ssr": "ng build --configuration production && ng run devtoolbox:server:production",
