@@ -1,0 +1,8 @@
+{
+  "routes": [
+    "/debugging",
+    "/formatter",
+    "/frontend",
+    "/testing"
+  ]
+}
