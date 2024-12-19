@@ -1,6 +1,6 @@
-@import '../../../styles/colors';
-@import '../../../styles/mixins';
-@import '../../../styles//variables';
+@import '../../../../styles/colors';
+@import '../../../../styles/mixins';
+@import '../../../../styles//variables';
 
 .menu-wrapper {
   display: flex;
@@ -13,7 +13,7 @@
   user-select: none;
   transition: transform 0.5s ease-in-out;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;

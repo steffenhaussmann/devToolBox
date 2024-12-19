@@ -1,1 +1,5 @@
-<p>formatter works!</p>
+<div class="wrapper">
+  @for (feature of featureList; track $index) {
+    <app-feature-button [feature]="feature"></app-feature-button>
+  }
+</div>

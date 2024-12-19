@@ -1,0 +1,6 @@
+@if (feature()) {
+  <div class="wrapper">
+    <lucide-angular color="var(--color-grey-1)" size="50" [img]="feature()?.icon"></lucide-angular>
+    <span>{{ feature()?.name }}</span>
+  </div>
+}

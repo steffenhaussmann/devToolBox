@@ -1,6 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { routes } from '../../app.routes';
+import { routes } from '../../../app.routes';
 import {
   LucideAngularModule,
   ArrowLeft,
@@ -14,7 +14,7 @@ import {
   PaintBucket,
 } from 'lucide-angular';
 import { NgIf } from '@angular/common';
-import { CustomOverlayComponent } from '../components/custom-overlay/custom-overlay.component';
+import { CustomOverlayComponent } from '../../components/custom-overlay/custom-overlay.component';
 
 @Component({
   standalone: true,
@@ -36,7 +36,7 @@ export class MainMenuComponent {
   readonly routes = routes;
 
   selectedCategoryId = signal(0);
-  isMenuVisible = signal(true);
+  isMenuVisible = signal(false);
   isMenuOpening = signal(false);
 
   navigateToFeatureCategory(categoryId: number) {
