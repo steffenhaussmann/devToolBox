@@ -9,4 +9,4 @@ FROM node:18-alpine
 WORKDIR /usr/app
 COPY --from=build /app/src/dist/devtoolbox ./
 CMD node server/server.mjs
-EXPOSE 8080
+EXPOSE 80
