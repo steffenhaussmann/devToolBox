@@ -4,10 +4,10 @@ services:
     build: .
     container_name: angular-ssr
     ports:
-      - '80:80'
+      - '4000:4000'
     environment:
       - NODE_ENV=production
-      - PORT=80
+      - PORT=4000
     restart: unless-stopped
 
   nginx:
