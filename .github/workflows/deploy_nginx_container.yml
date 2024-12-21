@@ -12,30 +12,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Repository auschecken
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Einloggen bei Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Extract metadata for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox
-
+      # Docker-Image bauen und pushen
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox:latest
-          labels: ${{ steps.meta.outputs.labels }}
+          # Tags für das Image (z. B. mit Versionsnummer oder "latest")
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox:latest
+            ${{ secrets.DOCKER_HUB_USERNAME }}/devtoolbox:${{ github.sha }}
 
+      # Erfolgsmeldung
       - name: Verify Docker Image
         run: |
           echo "Docker image successfully pushed to Docker Hub!"
